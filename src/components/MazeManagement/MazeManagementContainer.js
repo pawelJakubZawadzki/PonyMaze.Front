@@ -5,11 +5,17 @@ import {
   fetchPonies
 } from '../../modules/Pony';
 
-import { fetchMazeData } from '../../modules/Maze';
+import {
+  fetchMazeData,
+  setDialogVisibility,
+  setDialogMessage
+} from '../../modules/Maze';
 
 const mapDispatchToProps = {
   fetchPonies,
-  fetchMazeData
+  fetchMazeData,
+  setDialogVisibility,
+  setDialogMessage
 };
 
 const mapStateToProps = state => ({

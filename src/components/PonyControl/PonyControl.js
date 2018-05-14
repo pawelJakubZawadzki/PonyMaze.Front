@@ -3,57 +3,75 @@ import { Button } from 'react-toolbox/lib/button';
 import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { COMPONENTS } from '../../constants';
+import {
+  UP_LABEL,
+  DOWN_LABEL,
+  LEFT_LABEL,
+  RIGHT_LABEL,
+  NORTH_MOVE,
+  SOUTH_MOVE,
+  WEST_MOVE,
+  EAST_MOVE,
+  AUTOMATICALLY_MOVE,
+  AUTOMATICALLY_LABEL
+} from './constants';
 
 class PonyControl extends Component {
   handleButtonClick = (direction) => {
-    const { movePony, mazeId } = this.props;
+    const { movePony, mazeId, setControlsAvailability } = this.props;
 
     const mazeRequest = {
       direction
     };
 
+    setControlsAvailability(false);
     movePony(mazeRequest, mazeId);
   }
 
   render() {
-    const { theme } = this.props;
+    const { theme, areControlsAvailable } = this.props;
 
     return (
       <div>
         <Button
           className={theme.upButton}
-          label="Up"
+          label={UP_LABEL}
           raised
           primary
-          onClick={() => this.handleButtonClick('north')}
+          onClick={() => this.handleButtonClick(NORTH_MOVE)}
+          disabled={!areControlsAvailable}
         />
         <Button
           className={theme.downButton}
-          label="Down"
+          label={DOWN_LABEL}
           raised
           primary
-          onClick={() => this.handleButtonClick('south')}
+          onClick={() => this.handleButtonClick(SOUTH_MOVE)}
+          disabled={!areControlsAvailable}
         />
         <Button
           className={theme.leftButton}
-          label="Left"
+          label={LEFT_LABEL}
           raised
           primary
-          onClick={() => this.handleButtonClick('west')}
+          onClick={() => this.handleButtonClick(WEST_MOVE)}
+          disabled={!areControlsAvailable}
         />
         <Button
           className={theme.rightButton}
-          label="Right"
+          label={RIGHT_LABEL}
           raised
           primary
-          onClick={() => this.handleButtonClick('east')}
+          onClick={() => this.handleButtonClick(EAST_MOVE)}
+          disabled={!areControlsAvailable}
         />
         <Button
           className={theme.automaticallyButton}
-          label="Automatically"
+          label={AUTOMATICALLY_LABEL}
           raised
           primary
-          onClick={() => this.handleButtonClick('automatically')}
+          onClick={() => this.handleButtonClick(AUTOMATICALLY_MOVE)}
+          disabled={!areControlsAvailable}
         />
       </div>
     );
@@ -63,7 +81,9 @@ class PonyControl extends Component {
 PonyControl.propTypes = {
   movePony: PropTypes.func.isRequired,
   mazeId: PropTypes.string,
-  theme: PropTypes.object.isRequired
+  theme: PropTypes.object.isRequired,
+  setControlsAvailability: PropTypes.func.isRequired,
+  areControlsAvailable: PropTypes.bool.isRequired
 };
 
 export default themr(COMPONENTS.PONY_CONTROL)(PonyControl);

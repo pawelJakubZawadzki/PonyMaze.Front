@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { themr } from 'react-css-themr';
 import { Stage, Layer, Line, Image } from 'react-konva';
+import { window } from 'global/window';
 import { COMPONENTS } from '../../constants';
+import { NORTH_DIRECTION, WEST_DIRECTION, CELL_SIZE, WALL_STROKE, WALL_COLOR } from './constants';
 
 class MazeDisplay extends Component {
   state = {
@@ -42,29 +44,39 @@ class MazeDisplay extends Component {
 
     return (
       mazeData.map((cell, index) => {
-        if (cell.includes('north') && cell.includes('west')) {
+        if (cell.includes(NORTH_DIRECTION) && cell.includes(WEST_DIRECTION)) {
           return (
             <Line
-              points={[(index % mazeSize[0]) * 40, Math.floor(index / mazeSize[0]) * 40, ((index % mazeSize[0]) * 40) + 40, Math.floor(index / mazeSize[0]) * 40,
-                       (index % mazeSize[0]) * 40, Math.floor(index / mazeSize[0]) * 40, (index % mazeSize[0]) * 40, (Math.floor(index / mazeSize[0]) * 40) + 40]}
-              stroke="blue"
-              strokeWidth={5}
+              points={[
+                (index % mazeSize[0]) * CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE,
+                ((index % mazeSize[0]) * CELL_SIZE) + CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE,
+                (index % mazeSize[0]) * CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE,
+                (index % mazeSize[0]) * CELL_SIZE, (Math.floor(index / mazeSize[0]) * CELL_SIZE) + CELL_SIZE
+              ]}
+              stroke={WALL_COLOR}
+              strokeWidth={WALL_STROKE}
             />
           );
-        } else if (cell.includes('north')) {
+        } else if (cell.includes(NORTH_DIRECTION)) {
           return (
             <Line
-              points={[(index % mazeSize[0]) * 40, Math.floor(index / mazeSize[0]) * 40, ((index % mazeSize[0]) * 40) + 40, Math.floor(index / mazeSize[0]) * 40]}
-              stroke="blue"
-              strokeWidth={5}
+              points={[
+                (index % mazeSize[0]) * CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE,
+                ((index % mazeSize[0]) * CELL_SIZE) + CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE
+              ]}
+              stroke={WALL_COLOR}
+              strokeWidth={WALL_STROKE}
             />
           );
-        } else if (cell.includes('west')) {
+        } else if (cell.includes(WEST_DIRECTION)) {
           return (
             <Line
-              points={[(index % mazeSize[0]) * 40, Math.floor(index / mazeSize[0]) * 40, (index % mazeSize[0]) * 40, (Math.floor(index / mazeSize[0]) * 40) + 40]}
-              stroke="blue"
-              strokeWidth={5}
+              points={[
+                (index % mazeSize[0]) * CELL_SIZE, Math.floor(index / mazeSize[0]) * CELL_SIZE,
+                (index % mazeSize[0]) * CELL_SIZE, (Math.floor(index / mazeSize[0]) * CELL_SIZE) + CELL_SIZE
+              ]}
+              stroke={WALL_COLOR}
+              strokeWidth={WALL_STROKE}
             />
           );
         }
@@ -78,10 +90,10 @@ class MazeDisplay extends Component {
 
     return (
       <Line
-        points={[mazeSize[0] * 40, 0, mazeSize[0] * 40, mazeSize[1] * 40,
-                 0, mazeSize[1] * 40, mazeSize[0] * 40, mazeSize[1] * 40]}
-        stroke="blue"
-        strokeWidth={5}
+        points={[mazeSize[0] * CELL_SIZE, 0, mazeSize[0] * CELL_SIZE, mazeSize[1] * CELL_SIZE,
+                 0, mazeSize[1] * CELL_SIZE, mazeSize[0] * CELL_SIZE, mazeSize[1] * CELL_SIZE]}
+        stroke={WALL_COLOR}
+        strokeWidth={WALL_STROKE}
       />
     );
   }
@@ -89,10 +101,14 @@ class MazeDisplay extends Component {
   renderImage(name, location) {
     const { mazeSize } = this.props;
 
+    if (location === null) {
+      return null;
+    }
+
     return (
       <Image
-        x={((location % mazeSize[0]) * 40) + 3}
-        y={(Math.floor(location / mazeSize[0]) * 40) + 3}
+        x={((location % mazeSize[0]) * CELL_SIZE) + 3}
+        y={(Math.floor(location / mazeSize[0]) * CELL_SIZE) + 3}
         width={33}
         height={33}
         image={this.state[name]}
@@ -102,7 +118,12 @@ class MazeDisplay extends Component {
 
   render() {
     const {
-      theme, mazeData, ponyLocation, domokunLocation, endpointLocation
+      theme,
+      mazeData,
+      ponyLocation,
+      domokunLocation,
+      endpointLocation,
+      mazeSize
     } = this.props;
 
     if (mazeData === null) {
@@ -110,7 +131,7 @@ class MazeDisplay extends Component {
     }
 
     return (
-      <Stage className={theme.maze} width={650} height={650}>
+      <Stage className={theme.maze} width={(mazeSize[0] * CELL_SIZE) + 20} height={(mazeSize[1] * CELL_SIZE) + 20}>
         <Layer x={10} y={10}>
           {this.renderMaze()}
           {this.renderMazeBorder()}

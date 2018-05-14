@@ -1,6 +1,9 @@
 export {
   fetchMazeData,
-  movePony
+  movePony,
+  setDialogVisibility,
+  setDialogMessage,
+  setControlsAvailability
 } from './actions';
 
 export {
@@ -9,5 +12,8 @@ export {
   selectMazeSize,
   selectPonyLocation,
   selectDomokunLocation,
-  selectEndpointLocation
+  selectEndpointLocation,
+  selectIsDialogVisible,
+  selectDialogMessage,
+  selectAreControlsAvailable
 } from './selectors';

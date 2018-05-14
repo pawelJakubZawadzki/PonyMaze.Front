@@ -17,3 +17,24 @@ export const movePony = (movePonyRequest, mazeId) => async (dispatch, getState, 
     payload: response.data
   });
 };
+
+export const setDialogVisibility = isDialogVisible => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.SET_DIALOG_VISIBILITY,
+    payload: isDialogVisible
+  });
+};
+
+export const setDialogMessage = dialogMessage => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.SET_DIALOG_MESSAGE,
+    payload: dialogMessage
+  });
+};
+
+export const setControlsAvailability = areControlsAvailable => async (dispatch) => {
+  dispatch({
+    type: ACTION_TYPES.SET_CONTROLS_AVAILABLE,
+    payload: areControlsAvailable
+  });
+};

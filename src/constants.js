@@ -2,7 +2,9 @@ export const COMPONENTS = {
   LAYOUT: 'Layout',
   MAZE_MANAGEMENT: 'MazeManagement',
   PONY_CONTROL: 'PonyControl',
-  MAZE_DISPLAY: 'MazeDisplay'
+  MAZE_DISPLAY: 'MazeDisplay',
+  DIALOG_MESSAGE: 'DialogMessage'
 };
 
-export const API_URL = 'http://localhost:55183/api/';
+export const API_URL = 'https://ponymazeapi.azurewebsites.net/api/';
+

@@ -3,6 +3,7 @@ import AppBar from 'react-toolbox/lib/app_bar';
 import MazeManagemnet from './MazeManagement';
 import PonyControl from './PonyControl';
 import MazeDisplay from './MazeDisplay';
+import DialogMessage from './DialogMessage';
 
 const Layout = () => (
   <div>
@@ -10,6 +11,7 @@ const Layout = () => (
     <MazeManagemnet />
     <PonyControl />
     <MazeDisplay />
+    <DialogMessage />
   </div>
 );
 

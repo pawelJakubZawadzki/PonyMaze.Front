@@ -6,7 +6,10 @@ const initialState = {
   mazeSize: [],
   ponyLocation: null,
   domokunLocation: null,
-  endpointLocation: null
+  endpointLocation: null,
+  dialogMessage: null,
+  isDialogVisible: false,
+  areControlsAvailable: true
 };
 
 export default function maze(state = initialState, action) {
@@ -23,11 +26,39 @@ export default function maze(state = initialState, action) {
       };
     }
     case ACTION_TYPES.PONY_MOVED: {
+      if (!action.payload.isSuccessful) {
+        return {
+          ...state,
+          isDialogVisible: true,
+          dialogMessage: action.payload['state-result'],
+          areControlsAvailable: true
+        };
+      }
+
       return {
         ...state,
         ponyLocation: action.payload.mazeData.pony,
         domokunLocation: action.payload.mazeData.domokun,
-        endpointLocation: action.payload.mazeData['end-point']
+        endpointLocation: action.payload.mazeData['end-point'],
+        areControlsAvailable: true
+      };
+    }
+    case ACTION_TYPES.SET_DIALOG_VISIBILITY: {
+      return {
+        ...state,
+        isDialogVisible: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_DIALOG_MESSAGE: {
+      return {
+        ...state,
+        dialogMessage: action.payload
+      };
+    }
+    case ACTION_TYPES.SET_CONTROLS_AVAILABLE: {
+      return {
+        ...state,
+        areControlsAvailable: action.payload
       };
     }
     default: return state;

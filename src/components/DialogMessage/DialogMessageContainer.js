@@ -1,19 +1,17 @@
 import { connect } from 'react-redux';
 import {
-  movePony,
-  selectMazeId,
-  selectAreControlsAvailable,
-  setControlsAvailability
+  setDialogVisibility,
+  selectIsDialogVisible,
+  selectDialogMessage
 } from '../../modules/Maze';
 
 const mapDispatchToProps = {
-  movePony,
-  setControlsAvailability
+  setDialogVisibility
 };
 
 const mapStateToProps = state => ({
-  mazeId: selectMazeId(state),
-  areControlsAvailable: selectAreControlsAvailable(state)
+  isDialogVisible: selectIsDialogVisible(state),
+  dialogMessage: selectDialogMessage(state)
 });
 
 export default connect(mapStateToProps, mapDispatchToProps);

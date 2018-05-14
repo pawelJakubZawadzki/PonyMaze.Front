@@ -1,0 +1,29 @@
+.controlsContainer {
+    display: flex;
+}
+
+.ponyDropdown {
+    order: 1;
+    flex-grow: 4;
+}
+
+.widthInput {
+    order: 2;
+    flex-grow: 4;
+}
+
+.heightInput {
+    order: 3;
+    flex-grow: 4;
+}
+
+.difficultyInput {
+    order: 4;
+    flex-grow: 4;
+}
+
+.button {
+    order: 5;
+    flex-grow: 4;
+    top: 17px;
+}
